@@ -1,0 +1,49 @@
+{
+    "kind": "BuildConfig",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "pipeline",
+        "creationTimestamp": null,
+        "labels": {
+            "app": "pipeline",
+            "name": "pipeline"
+        },
+        "annotations": {
+            "openshift.io/generated-by": "OpenShiftNewApp",
+            "pipeline.alpha.openshift.io/uses": "[{\"name\": \"ticket-monster\", \"namespace\": \"monster-monolith\", \"kind\": \"DeploymentConfig\"}]"
+        }
+    },
+    "spec": {
+        "triggers": [
+            {
+                "type": "GitHub",
+                "github": {
+                    "secret": "secret101"
+                }
+            },
+            {
+                "type": "Generic",
+                "generic": {
+                    "secret": "secret101"
+                }
+            }
+        ],
+        "runPolicy": "Serial",
+        "source": {
+            "type": "None",
+            "secrets": null
+        },
+        "strategy": {
+            "type": "JenkinsPipeline",
+            "jenkinsPipelineStrategy": {
+                "jenkinsfile": "node('maven') {\n  stage 'build'\n  openshiftBuild(buildConfig: 'ticket-monster', showBuildLogs: 'true', waitTime: 600000)\n  stage 'approve'\n  timeout(time: 2, unit: 'DAYS') {\n    input message: 'Approve to production?'\n  }\n  stage 'deploy'\n  openshiftDeploy(deploymentConfig: 'ticket-monster', waitTime: 600000)\n}\n"
+            }
+        },
+        "output": {},
+        "resources": {},
+        "postCommit": {}
+    },
+    "status": {
+        "lastVersion": 0
+    }
+}

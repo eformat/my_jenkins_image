@@ -1,0 +1,12 @@
+{
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "my_docker_image",
+        "namespace": "openshift",
+        "creationTimestamp": null
+    },
+    "spec": {
+        "dockerImageRepository": "docker.io/eformat"
+    }
+}
