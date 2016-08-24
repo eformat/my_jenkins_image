@@ -136,7 +136,7 @@
                     "name": "${JENKINS_SERVICE_NAME}-data",
                     "mountPath": "/var/lib/jenkins"
                   },
-		  {
+    	          {
                     "name": "docker",
                     "mountPath": "/var/run/docker.sock"
                   }		    
@@ -253,7 +253,7 @@
       "name": "MEMORY_LIMIT",
       "displayName": "Memory Limit",
       "description": "Maximum amount of memory the container can use.",
-      "value": "512Mi"
+      "value": "2048Mi"
     },
     {
       "name": "NAMESPACE",
